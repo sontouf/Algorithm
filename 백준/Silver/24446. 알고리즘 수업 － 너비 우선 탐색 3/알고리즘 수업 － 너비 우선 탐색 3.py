@@ -3,19 +3,19 @@ from collections import deque
 input = sys.stdin.readline
 
 def bfs(s):
-	visited = [0] * (N + 1)
-	visited[s] = 1
+	# visited = [0] * (N + 1)
+	visited[s] = 0
 	queue = deque()
 	queue.append(s)
-	distance[s] = 0
+	# distance[s] = 0
 	while queue:
 		cur = queue.popleft()
 
 		for nxt in graph[cur]:
-			if visited[nxt] == 0:
-				visited[nxt] = 1
+			if visited[nxt] == -1:
+				visited[nxt] = visited[cur] + 1
 				queue.append(nxt)
-				distance[nxt] = distance[cur] + 1	
+				# distance[nxt] = distance[cur] + 1	
 
 if __name__=='__main__':
 	N, M, R = map(int, input().split())
@@ -24,6 +24,8 @@ if __name__=='__main__':
 		s, e = map(int, input().split())
 		graph[s].append(e)
 		graph[e].append(s)
-	distance = [-1] * (N + 1)
+	# distance = [-1] * (N + 1)
+	visited = [-1] * (N + 1)
 	bfs(R)
-	print(*distance[1:], sep='\n')
+	# print(*distance[1:], sep='\n')
+	print(*visited[1:], sep='\n')
